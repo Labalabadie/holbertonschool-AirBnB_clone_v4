@@ -12,7 +12,6 @@ app = Flask(__name__)
 # app.jinja_env.trim_blocks = True
 # app.jinja_env.lstrip_blocks = True
 
-cache_id = uuid.uuid4()
 
 @app.teardown_appcontext
 def close_db(error):
@@ -35,12 +34,13 @@ def hbnb():
 
     places = storage.all(Place).values()
     places = sorted(places, key=lambda k: k.name)
+    cache_id = uuid.uuid4()
 
-    return render_template('100-hbnb.html',
+    return render_template('0-hbnb.html',
+                           cache_id=cache_id,
                            states=st_ct,
                            amenities=amenities,
-                           places=places
-                           cache_id=cache_id)
+                           places=places)
 
 
 if __name__ == "__main__":
